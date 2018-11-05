@@ -36,6 +36,14 @@ naive (vector< vector<matrixType> > &text,
     }
 }
 
+void
+baker_bird (vector< vector<matrixType> > &text,
+            vector< vector<matrixType> > &pattern,
+            int dimensions[2], vector< pair<int,int> > &matches)
+{
+
+}
+
 
 /* For this algo to work, maximum dimension of pattern matrix is 31 and
    only binary values are allowed i.e. 0 or 1 */
