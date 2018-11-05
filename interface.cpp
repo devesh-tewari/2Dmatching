@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <stdlib.h>
 #include "2D-matching-algos.h"
 using namespace std;
 
@@ -9,42 +10,46 @@ int* dimensions = new int[2];
 vector< vector<matrixType> > text;
 vector< vector<matrixType> > pattern;
 
-vector<int> matches;
+vector< pair<int,int> > matches;
 
-string options[] = { "0", "Naive 2-D Pattern Matching Algorithm", "x", "x", "x" };
+string options[] = { "0", "Naive 2-D Matching Algorithm",
+                     "Baker Bird Matching Algorithm",
+                     "x", "2-D Matching using Hash values" };
 
 void fetch_input (int);
+void display_results ();
 
 int
 main ()
 {
-  int choice;
+  char choice;
 
   do
     {
       cout << "\033[2J\033[1;1H";
-      cout << "\033[1;36m********************************************************************************\n\033[0m";
-      cout << "                \033[1;4;32m2-D String Matching and Pattern Identification\n\033[0m";
-      cout << "\033[1;36m********************************************************************************\n\033[0m";
+      cout << "\033[1;34m********************************************************************************\n\033[0m";
+      cout << "                 \033[1;36m2-D String Matching and Pattern Identification\n\033[0m";
+      cout << "\033[1;34m********************************************************************************\n\033[0m";
 
-      cout << "\n\n\033[1;34mOptions:\n";
-      cout << "1. Naive 2-D Pattern Matching Algorithm\n";
-      cout << "2. \n";
-      cout << "3. \n";
-      cout << "4. \n";
+      cout << "\n\n\033[1;32mOptions:\n";
+      cout << "1. " << options[1] << endl;
+      cout << "2. " << options[2] << endl;
+      cout << "3. " << options[3] << endl;
+      cout << "4. " << options[4] << endl;
       cout << "5. Quit\n";
-      cout << "\nChoose an option (1-5): \033[0m";
+      cout << "\n\033[1;31mChoose an option (1-5): \033[0m";
 
       cin >> choice;
 
-      if (choice >= 1 && choice <= 3 )
+      if (choice >= '1' && choice <= '4')
         {
           int input_choice;
 
-          cout << "\n\n\033[1;35mChoose an option to provide input to " << options[choice] << ":\n";
+          cout << "\n\n\033[1;32mChoose an option to provide input to "
+               << options[(int)choice-48] << ":\n";
           cout << "1. Provide custom input\n";
-          cout << "2. Generate xyx distribution\n";
-          cout << "\nChoose an option: ";
+          cout << "2. Generate random input\n";
+          cout << "\n\033[1;31mChoose an option: ";
 
           cin >> input_choice;
           cout << "\n";
@@ -52,20 +57,38 @@ main ()
           fetch_input (input_choice);
         }
 
+      cout << "\033[1;33m";
       switch (choice)
         {
-          case 1: naive (text, pattern, dimensions, matches);
-                  cout <<"\n"<< matches[0];
-                  exit(1);
-                  break;
+          case '1': naive (text, pattern, dimensions, matches);
+                    display_results ();
+                    break;
+
+          case '2': break;
+
+          case '3': break;
+
+          case '4': hashing (text, pattern, dimensions, matches);
+                    display_results ();
+                    break;
+
+          default:  cout << "\n\033[1;31mWrong input!\n";
+                    break;
         }
 
-    } while (choice != 5);
+      cout << "\n\033[1;33mEnter any key to continue.\n";
+      char any;
+      cin >> any;
+
+    } while (choice != '5');
+
+  return 0;
 }
 
 void
 fetch_input (int choice)
 {
+  cout << "\033[1;33m";
   cout << "\nEnter order of text matrix (e.g. 10): ";
   cin >> dimensions[0];
 
@@ -80,6 +103,17 @@ fetch_input (int choice)
           for (int j = 0; j < dimensions[0]; j++)
             {
               cin >> text[i][j];
+            }
+        }
+    }
+  else if (choice == 2)
+    {
+      for (int i = 0; i < dimensions[0]; i++)
+        {
+          text[i].resize (dimensions[0]);
+          for (int j = 0; j < dimensions[0]; j++)
+            {
+              text[i][j] = rand()%128; //get random character
             }
         }
     }
@@ -103,6 +137,36 @@ fetch_input (int choice)
 
   if (choice == 2)
     {
-      cout<<"x";
+      int x = rand() % (dimensions[0] - dimensions[1] + 1);
+      int y = rand() % (dimensions[0] - dimensions[1] + 1);
+      cout << "\nExpected: (" << x << ", " << y << ")" << endl;
+      for (int i = 0; i < dimensions[1]; i++)
+        {
+          pattern[i].resize (dimensions[1]);
+          for (int j = 0; j < dimensions[1]; j++)
+            {
+              pattern[i][j] = text[i + x][j + y];
+            }
+        }
     }
+}
+
+void
+display_results ()
+{
+  int number_of_matches = matches.size ();
+  if (number_of_matches == 0)
+    {
+      cout << "\n\033[1;31mNo matches found." << endl;
+      return;
+    }
+
+  cout << "\n\033[1;32mMatches found at the folowing indicies:" << endl;
+  int i;
+  for (i = 0; i < number_of_matches; i++)
+    {
+      cout << "(" << matches[i].first << ", " << matches[i].second << ")\n";
+    }
+
+  matches.clear ();
 }
