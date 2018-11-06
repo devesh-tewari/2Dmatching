@@ -55,9 +55,9 @@ hashing (vector< vector<matrixType> > &text,
   int i,j;
   int span = dimensions[0] - dimensions[1] + 1;
 
-  uint64_t hash_pattern[ dimensions[1] ];
-  uint64_t hash_text[ dimensions[0] ][ span ];
-  uint64_t temp;
+  uint32_t hash_pattern[ dimensions[1] ];
+  uint32_t hash_text[ dimensions[0] ][ span ];
+  uint32_t temp;
 
   /* Preprocessing: Calculating pattern's hash of every row. */
   for (i = 0; i < dimensions[1]; i++)
@@ -72,7 +72,7 @@ hashing (vector< vector<matrixType> > &text,
 
   /* Preprocessing: Calculating text's hash of every row with length as that
      of pattern. */
-  uint64_t bit_reset_mask = 0;
+  uint32_t bit_reset_mask = 0;
   for (i = 0; i < dimensions[1]; i++)
     bit_reset_mask |= 1 << i;
 

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
+#include <time.h>
 #include "2D-matching-algos.h"
 using namespace std;
 
@@ -58,6 +59,7 @@ main ()
         }
 
       cout << "\033[1;33m";
+      const clock_t begin_time = clock();
       switch (choice)
         {
           case '1': naive (text, pattern, dimensions, matches);
@@ -76,6 +78,7 @@ main ()
                     break;
         }
 
+      cout << "Clock Cycles Taken: " << float( clock () - begin_time );
       cout << "\n\033[1;33mEnter any key to continue.\n";
       char any;
       cin >> any;
