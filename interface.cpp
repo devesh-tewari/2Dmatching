@@ -66,7 +66,9 @@ main ()
                     display_results ();
                     break;
 
-          case '2': break;
+          case '2': baker_bird (text, pattern, dimensions, matches);
+                    display_results ();
+                    break;
 
           case '3': break;
 
@@ -116,7 +118,7 @@ fetch_input (int choice)
           text[i].resize (dimensions[0]);
           for (int j = 0; j < dimensions[0]; j++)
             {
-              text[i][j] = rand()%128; //get random character
+              text[i][j] = (rand() % 26) + 'a'; //get random character
             }
         }
     }

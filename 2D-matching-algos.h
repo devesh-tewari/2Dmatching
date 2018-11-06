@@ -15,4 +15,8 @@ void hashing (vector< vector<matrixType> > &text,
               vector< vector<matrixType> > &pattern,
               int dimensions[2], vector< pair<int,int> > &matches);
 
+void baker_bird (vector< vector<matrixType> > &text,
+              vector< vector<matrixType> > &pattern,
+              int dimensions[2], vector< pair<int,int> > &matches);
+
 #endif

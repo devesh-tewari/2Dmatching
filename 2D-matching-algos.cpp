@@ -2,15 +2,16 @@
 #include <vector>
 #include <stdint.h>
 #include <iostream>
+#include <queue>
 #include "2D-matching-algos.h"
 using namespace std;
 
 
 
-//By me From 
+//By me From
 int total = 1;
 
-  void build(vector<char> &str , vector< vector<int> > &trie )
+  /*void build(vector<char> &str , vector< vector<int> > &trie )
   {
     int curr=0;
     for(int i=0 ; i < str.size() ; i++)
@@ -23,7 +24,7 @@ int total = 1;
       }
       curr = trie[curr][ch];
     }
-  }
+  }*/
 
   void ahoCorasick( vector < vector<char> > &textArray , int numStrings , vector< vector<int> > &trie , vector <int> &failure )
   {
@@ -31,9 +32,19 @@ int total = 1;
 
     //Build the trie data structure
     //i.e. transition states
-    for(int i = 0 ; i < numStrings ; i++)
+    for(int j = 0 ; j < numStrings ; j++)
     {
-      build(textArray[i] , trie);
+      int curr=0;
+      for(int i=0 ; i < textArray[j].size() ; i++)
+      {
+        int ch = textArray[j][i] - 'a' ;
+        if( trie[curr][ch] == -1 )
+        {
+          trie[curr][ch]=total;
+          total++;
+        }
+        curr = trie[curr][ch];
+      }
     }
 
     //add a transition edge from all the node at the starting state i.e. 0
@@ -189,7 +200,7 @@ baker_bird (vector< vector<matrixType> > &text,
   vector< vector <int> > textArrayPrime;
   vector< vector <int> > patternArrayPrime;
   vector< vector<int> > trie ;
-  vector< int > failure;  
+  vector< int > failure;
 
   trie.resize( dimensions[0]*dimensions[0] );
   failure.resize( dimensions[0]*dimensions[0] );
@@ -204,11 +215,11 @@ baker_bird (vector< vector<matrixType> > &text,
 
   ahoCorasick(pattern , dimensions[1]  , trie , failure );
   makeTA(text , dimensions[0] , textArrayPrime  , trie , failure );
-  makeTA(pattern , dimensions[1] , patternArray Prime, trie , failure );
+  makeTA(pattern , dimensions[1] , patternArrayPrime, trie , failure );
 
   for(int i = 0 ; i < dimensions[0] ; i++ )
     kmp_substring( patternArrayPrime[ dimensions[1]-1 ] , textArrayPrime[i] , i+1 , dimensions[1]  , matches);
-  
+
   if(matches.size() == 0)
     cout<<"No Match Found "<<endl;
   else
