@@ -42,14 +42,14 @@ main ()
 
       cin >> choice;
 
+      int input_choice;
       if (choice >= '1' && choice <= '4')
         {
-          int input_choice;
-
           cout << "\n\n\033[1;32mChoose an option to provide input to "
                << options[(int)choice-48] << ":\n";
           cout << "1. Provide custom input\n";
           cout << "2. Generate random input\n";
+          cout << "3. Naive worst case\n";
           cout << "\n\033[1;31mChoose an option: ";
 
           cin >> input_choice;
@@ -63,24 +63,29 @@ main ()
       switch (choice)
         {
           case '1': naive (text, pattern, dimensions, matches);
-                    display_results ();
+                    cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
+                    if(input_choice != 3)
+                      display_results ();
                     break;
 
           case '2': baker_bird (text, pattern, dimensions, matches);
-                    display_results ();
+                    cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
+                    if(input_choice != 3)
+                      display_results ();
                     break;
 
           case '3': break;
 
           case '4': hashing (text, pattern, dimensions, matches);
-                    display_results ();
+                    cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
+                    if(input_choice != 3)
+                      display_results ();
                     break;
 
           default:  cout << "\n\033[1;31mWrong input!\n";
                     break;
         }
 
-      cout << "Clock Cycles Taken: " << float( clock () - begin_time );
       cout << "\n\033[1;33mEnter any key to continue.\n";
       char any;
       cin >> any;
@@ -119,6 +124,18 @@ fetch_input (int choice)
           for (int j = 0; j < dimensions[0]; j++)
             {
               text[i][j] = (rand() % 26) + 'a'; //get random character
+              cout<<text[i][j]<<endl;
+            }
+        }
+    }
+  else if (choice == 3)
+    {
+      for (int i = 0; i < dimensions[0]; i++)
+        {
+          text[i].resize (dimensions[0]);
+          for (int j = 0; j < dimensions[0]; j++)
+            {
+              text[i][j] = 'a'; //get random character
             }
         }
     }
@@ -140,7 +157,7 @@ fetch_input (int choice)
         }
     }
 
-  if (choice == 2)
+  if (choice == 2 || choice == 3)
     {
       int x = rand() % (dimensions[0] - dimensions[1] + 1);
       int y = rand() % (dimensions[0] - dimensions[1] + 1);

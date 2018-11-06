@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <iostream>
 #include <queue>
+#include <time.h>
 #include "2D-matching-algos.h"
 using namespace std;
 
@@ -113,10 +114,10 @@ int total = 1;
   void makeTA( vector < vector<char> > &textArray , int numStrings , vector< vector <int> >  &textArrayPrime , vector <vector <int> > &trie , vector<int> &failure )
   {
 
-    textArrayPrime.resize(numStrings);
+    //textArrayPrime.resize(numStrings);
 
-    for(int i = 0 ; i < numStrings ; i++)
-      textArrayPrime[i].resize(numStrings);
+    //for(int i = 0 ; i < numStrings ; i++)
+      //textArrayPrime[i].resize(numStrings);
 
     for(int i = 0 ; i < numStrings ; i++)
       textArrayPrime[0][i] =  nextState( 0 , textArray[0][i] , trie , failure);
@@ -197,34 +198,37 @@ baker_bird (vector< vector<matrixType> > &text,
             vector< vector<matrixType> > &pattern,
             int dimensions[2], vector< pair<int,int> > &matches)
 {
-  vector< vector <int> > textArrayPrime;
-  vector< vector <int> > patternArrayPrime;
-  vector< vector<int> > trie ;
-  vector< int > failure;
+//const clock_t begin_time = clock();
+  vector< vector <int> > textArrayPrime( dimensions[0], vector<int> (dimensions[0]) );
+  vector< vector <int> > patternArrayPrime( dimensions[1], vector<int> (dimensions[1]) );
+  vector< vector<int> > trie( dimensions[0], vector<int> (26, -1) ) ;
+  vector< int > failure( dimensions[0] * dimensions[0], -1 );
+//cout << "Clock Cycles Taken: \n" << float( clock () - begin_time )<<endl;
 
-  trie.resize( dimensions[0]*dimensions[0] );
-  failure.resize( dimensions[0]*dimensions[0] );
+  //trie.resize( dimensions[0]*dimensions[0] );
+  //failure.resize( dimensions[0]*dimensions[0] );
+//const clock_t begin_time = clock();
+  // for(int i =0 ; i < dimensions[0]*dimensions[0] ; i++ )
+  // {
+  //   trie[i].resize(26 , -1);
+  //   fill(trie[i].begin(), trie[i].end() , -1 );
+  // }
 
-  for(int i =0 ; i < dimensions[0]*dimensions[0] ; i++ )
-  {
-    trie[i].resize(26 , -1);
-    fill(trie[i].begin(), trie[i].end() , -1 );
-  }
-
-  fill( failure.begin() , failure.end() , -1 );
-
+  //fill( failure.begin() , failure.end() , -1 );
+//cout << "Clock Cycles Taken: " << float( clock () - begin_time );
   ahoCorasick(pattern , dimensions[1]  , trie , failure );
+const clock_t begin_time = clock();
   makeTA(text , dimensions[0] , textArrayPrime  , trie , failure );
   makeTA(pattern , dimensions[1] , patternArrayPrime, trie , failure );
-
+cout << "Clock Cycles Taken: " << float( clock () - begin_time );
   for(int i = 0 ; i < dimensions[0] ; i++ )
     kmp_substring( patternArrayPrime[ dimensions[1]-1 ] , textArrayPrime[i] , i+1 , dimensions[1]  , matches);
 
-  if(matches.size() == 0)
+  /*if(matches.size() == 0)
     cout<<"No Match Found "<<endl;
   else
     for(auto it = matches.begin() ; it != matches.end() ; it++ )
-      cout<<"Found at Row : "<<it->first <<" Column : "<<it->second <<endl;
+      cout<<"Found at Row : "<<it->first <<" Column : "<<it->second <<endl;*/
 
 }
 
