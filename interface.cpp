@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "2D-matching-algos.h"
+#include "test.h"
 using namespace std;
 
 int* dimensions = new int[2];
@@ -15,7 +16,8 @@ vector< pair<int,int> > matches;
 
 string options[] = { "0", "Naive 2-D Matching Algorithm",
                      "Baker Bird Matching Algorithm",
-                     "x", "2-D Matching using Hash values" };
+                     "x", "2-D Matching using Hash values",
+                     "Test running time for these Algorithms" };
 
 void fetch_input (int);
 void display_results ();
@@ -37,8 +39,9 @@ main ()
       cout << "2. " << options[2] << endl;
       cout << "3. " << options[3] << endl;
       cout << "4. " << options[4] << endl;
-      cout << "5. Quit\n";
-      cout << "\n\033[1;31mChoose an option (1-5): \033[0m";
+      cout << "5. " << options[5] << endl;
+      cout << "6. Quit\n";
+      cout << "\n\033[1;31mChoose an option (1-6): \033[0m";
 
       cin >> choice;
 
@@ -82,7 +85,10 @@ main ()
                       display_results ();
                     break;
 
-          default:  cout << "\n\033[1;31mWrong input!\n";
+          case '5': test ();
+                    break;
+
+          default : cout << "\n\033[1;31mWrong input!\n";
                     break;
         }
 
@@ -90,7 +96,7 @@ main ()
       char any;
       cin >> any;
 
-    } while (choice != '5');
+    } while (choice != '6');
 
   return 0;
 }
