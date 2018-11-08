@@ -70,8 +70,7 @@ main ()
 
           case '2': baker_bird (text, pattern, dimensions, matches);
                     cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
-                    if(input_choice != 3)
-                      display_results ();
+                    display_results ();
                     break;
 
           case '3': break;
@@ -124,7 +123,7 @@ fetch_input (int choice)
           for (int j = 0; j < dimensions[0]; j++)
             {
               text[i][j] = (rand() % 26) + 'a'; //get random character
-              cout<<text[i][j]<<endl;
+              // cout<<text[i][j]<<endl;
             }
         }
     }
