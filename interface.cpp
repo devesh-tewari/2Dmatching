@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "2D-matching-algos.h"
-#include "test.h"
+// #include "test.h"
 using namespace std;
 
 int* dimensions = new int[2];
@@ -76,7 +76,10 @@ main ()
                     display_results ();
                     break;
 
-          case '3': break;
+          case '3': BYR( text, pattern, dimensions, matches);
+                    cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
+                    display_results ();
+                    break;
 
           case '4': hashing (text, pattern, dimensions, matches);
                     cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
@@ -84,8 +87,8 @@ main ()
                       display_results ();
                     break;
 
-          case '5': test ();
-                    break;
+          // case '5': test ();
+          //           break;
 
           default : cout << "\n\033[1;31mWrong input!\n";
                     break;

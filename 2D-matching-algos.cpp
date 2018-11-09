@@ -165,7 +165,7 @@ using namespace std;
           if (sub_index == m)
             {
              // cout<<"Found at Row : "<<row<<" Column : "<<str_index - sub_index<<endl;
-             output.push_back(make_pair(row-(dimension-1) , str_index - sub_index + 1) );
+             output.push_back(make_pair(row-(dimension) , str_index - sub_index ) );
              sub_index = pie_table[sub_index - 1] ;
             }
         }
@@ -260,7 +260,7 @@ void BYR(vector< vector<matrixType> > &text,
         }
         if (nextline==0)
           {
-            matches.push_back( make_pair(row-i+1 , col-m+1  ) );
+            matches.push_back( make_pair(row-i , col-m+1  ) );
           }
         else
           nextline=0;  
