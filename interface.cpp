@@ -73,12 +73,14 @@ main ()
 
           case '2': baker_bird (text, pattern, dimensions, matches);
                     cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
-                    display_results ();
+                    if(input_choice != 3)
+                      display_results ();
                     break;
 
-          case '3': BYR( text, pattern, dimensions, matches);
+          case '3': BYR (text, pattern, dimensions, matches);
                     cout << "Clock Cycles Taken: " << (long int)( clock () - begin_time );
-                    display_results ();
+                    if(input_choice != 3)
+                      display_results ();
                     break;
 
           case '4': hashing (text, pattern, dimensions, matches);

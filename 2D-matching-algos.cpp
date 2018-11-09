@@ -10,7 +10,9 @@ using namespace std;
 
 
 //By me From
-  int total ;
+
+int total ;
+
 
   void ahoCorasick( vector < vector<char> > &textArray , int numStrings , vector< vector<int> > &trie , vector <int> &failure , vector <int> &out)
   {
@@ -74,7 +76,7 @@ using namespace std;
 
             fail = trie[fail][i];
             failure[ trie[state][i] ] = fail;
- 
+
             out[trie[state][i]] |= out[fail];
 
             level.push( trie[state][i] );
@@ -164,7 +166,6 @@ using namespace std;
           }
           if (sub_index == m)
             {
-             // cout<<"Found at Row : "<<row<<" Column : "<<str_index - sub_index<<endl;
              output.push_back(make_pair(row-(dimension) , str_index - sub_index ) );
              sub_index = pie_table[sub_index - 1] ;
             }
@@ -190,32 +191,33 @@ baker_bird (vector< vector<matrixType> > &text,
   for(int i = 0 ; i < dimensions[0] ; i++ )
     kmp_substring( patternArrayPrime[ dimensions[1]-1 ] , textArrayPrime[i] , i+1 , dimensions[1]  , matches);
 
-}
 
 //Till Here
 
 //BYR
 
-bool search(  vector <char> &arr , unsigned int k , int *col , vector < vector <int> > &trie , vector <int> &failure , vector <int> &out ) 
-{ 
+
+
+bool search(  vector <char> &arr , unsigned int k , int *col , vector < vector <int> > &trie , vector <int> &failure , vector <int> &out )
+{
   int currentState = 0;
-  int i = 0 ; 
+  int i = 0 ;
   for(i = 0 ; i <(*col) && i < arr.size() ; i++)
-    currentState = nextState(currentState , arr[i] , trie , failure); 
-  
-    for ( ; i < arr.size(); ++i) 
-    { 
-        currentState = nextState(currentState, arr[i] , trie , failure); 
-  
-        if (out[currentState] == 0) 
-             continue; 
-  
-        if (out[currentState] & (1 << k)) 
-        { 
+    currentState = nextState(currentState , arr[i] , trie , failure);
+
+    for ( ; i < arr.size(); ++i)
+    {
+        currentState = nextState(currentState, arr[i] , trie , failure);
+
+        if (out[currentState] == 0)
+             continue;
+
+        if (out[currentState] & (1 << k))
+        {
               (*col) = i;
-              return true ; 
-        } 
-    } 
+              return true ;
+        }
+    }
     return false ;
 }
 
@@ -225,7 +227,7 @@ void BYR(vector< vector<matrixType> > &text,
        int dimensions[2], vector< pair<int,int> > &matches)
 {
   total = 1;
-  int n = dimensions[0]; 
+  int n = dimensions[0];
   int m = dimensions[1];
   vector< vector<int> > trie( dimensions[0]*dimensions[0] , vector<int> (26, -1) ) ;
   vector< int > failure( dimensions[0]*dimensions[0], -1 );
@@ -233,11 +235,11 @@ void BYR(vector< vector<matrixType> > &text,
 
   ahoCorasick(pattern , m , trie , failure , out);
 
-  int nextline = 0 ; 
-  int col ; 
+  int nextline = 0 ;
+  int col ;
   for( int row = m-1 ; row < n ; row=row+m )
-  {  
-        col = 0;  
+  {
+        col = 0;
     for( int i = 0 ; i <= m ; i++ )
     {
       if( search( text[row] , i , &col , trie , failure , out) )
@@ -263,7 +265,7 @@ void BYR(vector< vector<matrixType> > &text,
             matches.push_back( make_pair(row-i , col-m+1  ) );
           }
         else
-          nextline=0;  
+          nextline=0;
       }
     }
   }
