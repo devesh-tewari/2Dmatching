@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "2D-matching-algos.h"
-#include "test.h"
+// #include "test.h"
 using namespace std;
 
 int* dimensions = new int[2];
@@ -89,8 +89,8 @@ main ()
                       display_results ();
                     break;
 
-          case '5': test ();
-                    break;
+          // case '5': test ();
+          //           break;
 
           default : cout << "\n\033[1;31mWrong input!\n";
                     break;
