@@ -143,15 +143,15 @@ test_naive ()
 
           begin_time = clock();
           cout<<text_size<<" "<<pattern_size<<endl;
-          //baker_bird (txt, patt, dim, op);
+          baker_bird (txt, patt, dim, op);
           str = to_string ( (long int)( clock () - begin_time ) );
           bb << str << endl;
 
-          if (pattern_size > 2)
+          if (pattern_size > 2 && pattern_size < 16)
             {
               begin_time = clock();
-              //cout<<text_size<<" "<<pattern_size<<endl;
-              //BYR (txt, patt, dim, op);
+              cout<<text_size<<" "<<pattern_size<<endl;
+              BYR (txt, patt, dim, op);
               str = to_string ( (long int)( clock () - begin_time ) );
               by << str << endl;
             }
