@@ -44,7 +44,7 @@ int total ;
   //       curr = trie[curr][ch];
   //     }
 
-  //     out[curr] |= (1 << j); 
+  //     out[curr] |= (1 << j);
   //   }
 
   //   //add a transition edge from all the node at the starting state i.e. 0
@@ -120,7 +120,7 @@ int total ;
       }
       // cout<<"done1"<<endl;
       out[curr] |= (1 << j);
-      // cout<<"done2"<<endl; 
+      // cout<<"done2"<<endl;
       // cout<<(1<<j)<<endl;
     }
 
@@ -168,7 +168,7 @@ int total ;
 
             fail = trie[fail][i];
             failure[ trie[state][i] ] = fail;
- 
+
             out[trie[state][i]] |= out[fail];
 
             level.push( trie[state][i] );
@@ -298,7 +298,7 @@ baker_bird (vector< vector<matrixType> > &text,
 
   fill( failure.begin() , failure.end() , -1 );
 // cout << "Clock Cycles Taken: " << float( clock () - begin_time );
-const clock_t begin_time = clock();
+//const clock_t begin_time = clock();
 
   ahoCorasick(pattern , dimensions[1]  , trie , failure , out);
   makeTA(text , dimensions[0] , textArrayPrime  , trie , failure );
@@ -307,7 +307,7 @@ const clock_t begin_time = clock();
   for(int i = 0 ; i < dimensions[0] ; i++ )
     kmp_substring( patternArrayPrime[ dimensions[1]-1 ] , textArrayPrime[i] , i+1 , dimensions[1]  , matches);
 
-cout << "Clock Cycles Taken: " << float( clock () - begin_time );
+//cout << "Clock Cycles Taken: " << float( clock () - begin_time );
 
   /*if(matches.size() == 0)
     cout<<"No Match Found "<<endl;
@@ -328,27 +328,27 @@ cout << "Clock Cycles Taken: " << float( clock () - begin_time );
 
 
 
-bool search(  vector <char> &arr , unsigned int k , int *col , vector < vector <int> > &trie , vector <int> &failure , vector <int> &out ) 
-{ 
+bool search(  vector <char> &arr , unsigned int k , int *col , vector < vector <int> > &trie , vector <int> &failure , vector <int> &out )
+{
   int currentState = 0;
-  int i = 0 ; 
+  int i = 0 ;
   for(i = 0 ; i <(*col) && i < arr.size() ; i++)
-    currentState = nextState(currentState , arr[i] , trie , failure); 
-  
-    for ( ; i < arr.size(); ++i) 
-    { 
-        currentState = nextState(currentState, arr[i] , trie , failure); 
-  
-        if (out[currentState] == 0) 
-             continue; 
-  
-        if (out[currentState] & (1 << k)) 
-        { 
+    currentState = nextState(currentState , arr[i] , trie , failure);
+
+    for ( ; i < arr.size(); ++i)
+    {
+        currentState = nextState(currentState, arr[i] , trie , failure);
+
+        if (out[currentState] == 0)
+             continue;
+
+        if (out[currentState] & (1 << k))
+        {
               (*col) = i;
               // cout<<i<<endl;
-              return true ; 
-        } 
-    } 
+              return true ;
+        }
+    }
     return false ;
 }
 
@@ -359,7 +359,7 @@ void BYR(vector< vector<matrixType> > &text,
 {
   // string text[] = {"artar" , "unqun" , "unvar" , "tewun" , "shubh"};
   // string pattern[] = { "ar" , "un"   };
-  int n = dimensions[0]; 
+  int n = dimensions[0];
   int m = dimensions[1];
   vector< vector<int> > trie( dimensions[0]*dimensions[0] , vector<int> (26, -1) ) ;
   vector< int > failure( dimensions[0]*dimensions[0], -1 );
@@ -369,11 +369,11 @@ void BYR(vector< vector<matrixType> > &text,
 
   ahoCorasick(pattern , m , trie , failure , out);
   // cout<<"done"<<endl;
-  int nextline = 0 ; 
-  int col ; 
+  int nextline = 0 ;
+  int col ;
   for( int row = m-1 ; row < n ; row=row+m )
-  {  
-        col = 0;  
+  {
+        col = 0;
     for( int i = 0 ; i <= m ; i++ )
     {
       if( search( text[row] , i , &col , trie , failure , out) )
@@ -400,7 +400,7 @@ void BYR(vector< vector<matrixType> > &text,
             matches.push_back( make_pair(row-i+1 , col-m+1  ) );
           }
         else
-          nextline=0;  
+          nextline=0;
       }
     }
   }
