@@ -191,7 +191,7 @@ baker_bird (vector< vector<matrixType> > &text,
   for(int i = 0 ; i < dimensions[0] ; i++ )
     kmp_substring( patternArrayPrime[ dimensions[1]-1 ] , textArrayPrime[i] , i+1 , dimensions[1]  , matches);
 
-
+}
 //Till Here
 
 //BYR

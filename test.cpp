@@ -11,6 +11,8 @@ vector< pair<int,int> > op;
 void
 test_random ()
 {
+  cout << "Running on random input..." << endl;
+
   int text_size, pattern_size;
   int i, j;
   int x, y;
@@ -64,7 +66,7 @@ test_random ()
           str = to_string ( (long int)( clock () - begin_time ) );
           bb << str << endl;
 
-          if (pattern_size > 2)
+          if (pattern_size > 2 && pattern_size < 32)
             {
               begin_time = clock();
               //cout<<text_size<<" "<<pattern_size<<endl;
@@ -94,6 +96,9 @@ test_random ()
 void
 test_naive ()
 {
+  cout << "Running on naive's worst case..." << endl;
+  cout << "This will take around 10 minutes!" << endl;
+
   int text_size, pattern_size;
   int i, j;
   int x, y;
@@ -106,7 +111,7 @@ test_naive ()
   ofstream hs("test-results/hashing-naive-worst", ios::trunc);
   ofstream by("test-results/byr-naive-worst", ios::trunc);
 
-  for (text_size = 2; text_size <= 1024; text_size *= 2)
+  for (text_size = 2; text_size <= 512; text_size *= 2)
     {
       txt.resize(text_size);
       for (i = 0; i < text_size; i++)
@@ -117,6 +122,7 @@ test_naive ()
               txt[i][j] = 'a'; //get random character
             }
         }
+
       for (pattern_size = 1; pattern_size < text_size; pattern_size *= 2)
         {
           patt.resize (pattern_size);
@@ -136,21 +142,21 @@ test_naive ()
           dim[1] = pattern_size;
 
           begin_time = clock();
-          cout<<text_size<<" "<<pattern_size<<endl;
+          //cout<<text_size<<" "<<pattern_size<<endl;
           naive (txt, patt, dim, op);
           str = to_string ( (long int)( clock () - begin_time ) );
           nv << str << endl;
 
           begin_time = clock();
-          cout<<text_size<<" "<<pattern_size<<endl;
+          //cout<<text_size<<" "<<pattern_size<<endl;
           baker_bird (txt, patt, dim, op);
           str = to_string ( (long int)( clock () - begin_time ) );
           bb << str << endl;
 
-          if (pattern_size > 2 && pattern_size < 16)
+          if (pattern_size > 2 && pattern_size < 32)
             {
               begin_time = clock();
-              cout<<text_size<<" "<<pattern_size<<endl;
+              //cout<<text_size<<" "<<pattern_size<<endl;
               BYR (txt, patt, dim, op);
               str = to_string ( (long int)( clock () - begin_time ) );
               by << str << endl;
@@ -159,12 +165,12 @@ test_naive ()
           if (pattern_size < 32)
             {
               begin_time = clock();
-              cout<<text_size<<" "<<pattern_size<<endl;
+              //cout<<text_size<<" "<<pattern_size<<endl;
               hashing (txt, patt, dim, op);
               str = to_string ( (long int)( clock () - begin_time ) );
               hs << str << endl;
             }
-          cout<<endl;
+          //cout<<endl;
         }
     }
 
@@ -177,6 +183,8 @@ test_naive ()
 void
 test_binary ()
 {
+  cout << "Running on binary input..." << endl;
+
   int text_size, pattern_size;
   int i, j;
   int x, y;
@@ -197,7 +205,7 @@ test_binary ()
           txt[i].resize (text_size);
           for (j = 0; j < text_size; j++)
             {
-              txt[i][j] = (rand() % 2) + '0'; //get random character
+              txt[i][j] = (rand() % 2) + 'a'; //get random character
             }
         }
       for (pattern_size = 1; pattern_size < text_size; pattern_size *= 2)
@@ -230,7 +238,7 @@ test_binary ()
           str = to_string ( (long int)( clock () - begin_time ) );
           bb << str << endl;
 
-          if (pattern_size > 2)
+          if (pattern_size > 2 && pattern_size < 32)
             {
               begin_time = clock();
               //cout<<text_size<<" "<<pattern_size<<endl;
@@ -260,7 +268,8 @@ test_binary ()
 void
 test ()
 {
+  cout << "The tests will be saved on 'test-results' folder" << endl;
+  test_binary ();
   test_random ();
   test_naive ();
-  test_binary ();
 }
