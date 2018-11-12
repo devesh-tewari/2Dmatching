@@ -8,7 +8,7 @@ vector< vector<matrixType> > patt;// (1000, vector<matrixType>(1000));
 
 vector< pair<int,int> > op;
 
-void
+bool
 test_random ()
 {
   cout << "Running on random input..." << endl;
@@ -55,22 +55,34 @@ test_random ()
           dim[1] = pattern_size;
 
           begin_time = clock();
-          //cout<<text_size<<" "<<pattern_size<<endl;
+          op.clear ();
           naive (txt, patt, dim, op);
+          if (find (op.begin (), op.end (), make_pair (x, y)) == op.end ())
+          {
+            return false;
+          }
           str = to_string ( (long int)( clock () - begin_time ) );
           nv << str << endl;
 
           begin_time = clock();
-          //cout<<text_size<<" "<<pattern_size<<endl;
+          op.clear ();
           baker_bird (txt, patt, dim, op);
+          if (find (op.begin (), op.end (), make_pair (x, y)) == op.end ())
+          {
+            return false;
+          }
           str = to_string ( (long int)( clock () - begin_time ) );
           bb << str << endl;
 
           if (pattern_size > 2 && pattern_size < 32)
             {
               begin_time = clock();
-              //cout<<text_size<<" "<<pattern_size<<endl;
+              op.clear ();
               BYR (txt, patt, dim, op);
+              if (find (op.begin (), op.end (), make_pair (x, y)) == op.end ())
+              {
+                return false;
+              }
               str = to_string ( (long int)( clock () - begin_time ) );
               by << str << endl;
             }
@@ -78,8 +90,12 @@ test_random ()
           if (pattern_size < 32)
             {
               begin_time = clock();
-              //cout<<text_size<<" "<<pattern_size<<endl;
+              op.clear ();
               hashing (txt, patt, dim, op);
+              if (find (op.begin (), op.end (), make_pair (x, y)) == op.end ())
+              {
+                return false;
+              }
               str = to_string ( (long int)( clock () - begin_time ) );
               hs << str << endl;
             }
@@ -91,13 +107,15 @@ test_random ()
   bb.close ();
   hs.close ();
   by.close ();
+
+  return true;
 }
 
 void
 test_naive ()
 {
   cout << "Running on naive's worst case..." << endl;
-  cout << "This will take around 10 minutes!" << endl;
+  cout << "This will take around 2 minutes!" << endl;
 
   int text_size, pattern_size;
   int i, j;
@@ -268,8 +286,15 @@ test_binary ()
 void
 test ()
 {
-  cout << "The tests will be saved on 'test-results' folder" << endl;
+  bool passed = false;
+  cout << "The tests' clock cycles will be saved on 'test-results' folder";
+  cout << endl;
   test_binary ();
-  test_random ();
+  passed = test_random ();
   test_naive ();
+
+  if(passed == true)
+    cout << "All Tests Passed" << endl;
+  else
+    cout << "Failed!" << endl;
 }
